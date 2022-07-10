@@ -1,0 +1,8 @@
+POST localhost:8080/api/file/upload
+Content-Type: multipart/form-data; boundary=WebAppBoundary
+
+--WebAppBoundary
+Content-Disposition: form-data; name="file"; filename="logo.jpg"
+
+< /Users/nicejongwoo/dev/image/logo.jpg
+--WebAppBoundary--
