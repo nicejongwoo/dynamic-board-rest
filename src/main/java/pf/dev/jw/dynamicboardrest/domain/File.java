@@ -2,10 +2,8 @@ package pf.dev.jw.dynamicboardrest.domain;
 
 import lombok.Getter;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.*;
+import java.util.List;
 
 @Getter
 @Entity
@@ -20,6 +18,10 @@ public class File {
     private Long size;
     private String type;
     private String newName;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "attachment_id")
+    private Attachment attachment;
 
     public File() {
     }
