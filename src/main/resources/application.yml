@@ -16,3 +16,12 @@ spring:
         web-allow-others: false
   jpa:
     database-platform: org.hibernate.dialect.H2Dialect
+  servlet:
+    multipart:
+      enabled: true
+      max-file-size: 10MB
+      max-request-size: 20MB
+
+file:
+  upload:
+    directory: upload
