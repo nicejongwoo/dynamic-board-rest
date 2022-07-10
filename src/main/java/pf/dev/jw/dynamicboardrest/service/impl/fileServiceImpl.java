@@ -1,10 +1,15 @@
 package pf.dev.jw.dynamicboardrest.service.impl;
 
+import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.io.FilenameUtils;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
+import pf.dev.jw.dynamicboardrest.controller.dto.FileRequestDto;
+import pf.dev.jw.dynamicboardrest.domain.File;
+import pf.dev.jw.dynamicboardrest.repository.FileRepository;
 import pf.dev.jw.dynamicboardrest.service.FileService;
 
 import java.io.IOException;
@@ -15,13 +20,17 @@ import java.time.LocalDate;
 import java.util.UUID;
 
 @Slf4j
+@RequiredArgsConstructor
 @Service
 public class fileServiceImpl implements FileService {
 
+    private final FileRepository fileRepository;
+
     @Value("${file.upload.directory}")
     private String uploadDirectory;
+
     @Override
-    public void storeFile(MultipartFile file) {
+    public FileRequestDto storeFile(MultipartFile file) {
 
         String originalFilename = file.getOriginalFilename(); //test.txt
 
@@ -50,6 +59,22 @@ public class fileServiceImpl implements FileService {
             throw new RuntimeException(e);
         }
 
+        return new FileRequestDto(originalName, extension, size, contentType, newName);
+    }
+
+    @Override
+    @Transactional
+    public Long insertFile(FileRequestDto requestDto) {
+        File saveFile = fileRepository.save(
+                new File(
+                        requestDto.getOriginalName(),
+                        requestDto.getExtension(),
+                        requestDto.getSize(),
+                        requestDto.getType(),
+                        requestDto.getNewName()
+                )
+        );
+        return saveFile.getId();
     }
 
 
