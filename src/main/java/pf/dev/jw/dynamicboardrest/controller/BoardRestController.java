@@ -2,13 +2,15 @@ package pf.dev.jw.dynamicboardrest.controller;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import pf.dev.jw.dynamicboardrest.controller.dto.request.BoardRequest;
+import pf.dev.jw.dynamicboardrest.controller.dto.response.BoardListResponse;
+import pf.dev.jw.dynamicboardrest.controller.dto.response.CommonResponse;
+import pf.dev.jw.dynamicboardrest.controller.dto.search.BoardSearch;
 import pf.dev.jw.dynamicboardrest.service.BoardService;
 
 @Slf4j
@@ -24,5 +26,12 @@ public class BoardRestController {
         Long id = boardService.register(request);
         return new ResponseEntity<>(id, HttpStatus.CREATED);
     }
+
+    @GetMapping("")
+    public ResponseEntity<?> getList(BoardSearch search, Pageable pageable) {
+        Page<BoardListResponse> page = boardService.getList(search, pageable);
+        return ResponseEntity.ok(CommonResponse.success(page, ""));
+    }
+
 
 }
