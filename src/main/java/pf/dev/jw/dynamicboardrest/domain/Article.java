@@ -40,4 +40,7 @@ public class Article {
     @JoinColumn(name = "category_id")
     private Category category;
 
+    @OneToOne
+    private Answer answer;
+
 }

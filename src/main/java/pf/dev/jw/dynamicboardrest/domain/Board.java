@@ -1,11 +1,15 @@
 package pf.dev.jw.dynamicboardrest.domain;
 
+import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 import java.util.List;
 
+@Builder
+@AllArgsConstructor
 @NoArgsConstructor
 @Getter
 @Entity
@@ -37,11 +41,10 @@ public class Board {
 
     private boolean available; //게시판 사용여부
 
-    @OneToMany(mappedBy = "board")
+    @OneToMany(mappedBy = "board", fetch = FetchType.LAZY)
     private List<Category> categories;
 
     @OneToMany(mappedBy = "board", fetch = FetchType.LAZY)
     private List<Article> articles;
-
 
 }
