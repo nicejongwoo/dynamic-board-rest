@@ -1,10 +1,10 @@
 package pf.dev.jw.dynamicboardrest.service;
 
 import org.springframework.web.multipart.MultipartFile;
-import pf.dev.jw.dynamicboardrest.controller.dto.FileRequestDto;
+import pf.dev.jw.dynamicboardrest.controller.dto.request.FileRequest;
 
 public interface FileService {
-    FileRequestDto storeFile(MultipartFile file);
+    FileRequest storeFile(MultipartFile file);
 
-    Long insertFile(FileRequestDto requestDto);
+    Long insertFile(FileRequest request);
 }

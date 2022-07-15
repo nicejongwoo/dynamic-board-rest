@@ -7,7 +7,8 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
-import pf.dev.jw.dynamicboardrest.controller.dto.FileRequestDto;
+import pf.dev.jw.dynamicboardrest.controller.dto.mapper.FileDtoMapper;
+import pf.dev.jw.dynamicboardrest.controller.dto.request.FileRequest;
 import pf.dev.jw.dynamicboardrest.domain.File;
 import pf.dev.jw.dynamicboardrest.repository.FileRepository;
 import pf.dev.jw.dynamicboardrest.service.FileService;
@@ -30,7 +31,7 @@ public class fileServiceImpl implements FileService {
     private String uploadDirectory;
 
     @Override
-    public FileRequestDto storeFile(MultipartFile file) {
+    public FileRequest storeFile(MultipartFile file) {
 
         String originalFilename = file.getOriginalFilename(); //test.txt
 
@@ -59,22 +60,15 @@ public class fileServiceImpl implements FileService {
             throw new RuntimeException(e);
         }
 
-        return new FileRequestDto(originalName, extension, size, contentType, newName);
+        return new FileRequest(originalName, extension, size, contentType, newName);
     }
 
     @Override
     @Transactional
-    public Long insertFile(FileRequestDto requestDto) {
-        File saveFile = fileRepository.save(
-                new File(
-                        requestDto.getOriginalName(),
-                        requestDto.getExtension(),
-                        requestDto.getSize(),
-                        requestDto.getType(),
-                        requestDto.getNewName()
-                )
-        );
-        return saveFile.getId();
+    public Long insertFile(FileRequest request) {
+        File file = FileDtoMapper.MAPPER.toEntity(request);
+        fileRepository.save(file);
+        return file.getId();
     }
 
 
