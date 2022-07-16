@@ -27,7 +27,7 @@ public class BoardServiceImpl implements BoardService {
     @Transactional
     @Override
     public Long register(BoardRequest request) {
-        if (boardRepository.existsByCode(request.getCode())) throw new CustomApiException("게시판 코드가 중복입니다.", HttpStatus.BAD_REQUEST);
+        checkDuplCode(request);
         //boardRequest -> Board
         Board board = BoardDtoMapper.MAPPER.toEntity(request);
         boardRepository.save(board);
@@ -50,7 +50,12 @@ public class BoardServiceImpl implements BoardService {
     @Override
     public void edit(Long id, BoardRequest request) {
         Board board = checkBoard(id);
+        checkDuplCode(request);
         board.edit(request);
+    }
+
+    private void checkDuplCode(BoardRequest request) {
+        if (boardRepository.existsByCode(request.getCode())) throw new CustomApiException("게시판 코드가 중복입니다.", HttpStatus.BAD_REQUEST);
     }
 
     private Board checkBoard(Long id) {

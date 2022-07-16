@@ -32,6 +32,14 @@ public class CommonResponse<T> {
                 .build();
     }
 
+    public static <T> CommonResponse<T> fail(String message, T data) {
+        return (CommonResponse<T>) CommonResponse.builder()
+                .result(Result.FAIL)
+                .data(data)
+                .message(message)
+                .build();
+    }
+
     public enum Result {
         SUCCESS, FAIL
     }
