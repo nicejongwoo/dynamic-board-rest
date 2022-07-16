@@ -9,6 +9,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import pf.dev.jw.dynamicboardrest.controller.dto.request.BoardRequest;
 import pf.dev.jw.dynamicboardrest.controller.dto.response.BoardListResponse;
+import pf.dev.jw.dynamicboardrest.controller.dto.response.BoardResponse;
 import pf.dev.jw.dynamicboardrest.controller.dto.response.CommonResponse;
 import pf.dev.jw.dynamicboardrest.controller.dto.search.BoardSearch;
 import pf.dev.jw.dynamicboardrest.service.BoardService;
@@ -31,6 +32,12 @@ public class BoardRestController {
     public ResponseEntity<?> getList(BoardSearch search, Pageable pageable) {
         Page<BoardListResponse> page = boardService.getList(search, pageable);
         return ResponseEntity.ok(CommonResponse.success(page, ""));
+    }
+
+    @GetMapping("/{id}")
+    public ResponseEntity<?> getOne(@PathVariable Long id) {
+        BoardResponse response = boardService.getOne(id);
+        return ResponseEntity.ok(CommonResponse.success(response, ""));
     }
 
 

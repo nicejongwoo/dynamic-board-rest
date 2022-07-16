@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 import pf.dev.jw.dynamicboardrest.controller.dto.mapper.BoardDtoMapper;
 import pf.dev.jw.dynamicboardrest.controller.dto.request.BoardRequest;
 import pf.dev.jw.dynamicboardrest.controller.dto.response.BoardListResponse;
+import pf.dev.jw.dynamicboardrest.controller.dto.response.BoardResponse;
 import pf.dev.jw.dynamicboardrest.controller.dto.search.BoardSearch;
 import pf.dev.jw.dynamicboardrest.domain.Board;
 import pf.dev.jw.dynamicboardrest.repository.BoardRepository;
@@ -31,5 +32,14 @@ public class BoardServiceImpl implements BoardService {
     public Page<BoardListResponse> getList(BoardSearch search, Pageable pageable) {
         Page<BoardListResponse> page = boardRepository.search(search, pageable);
         return page;
+    }
+
+    @Override
+    public BoardResponse getOne(Long id) {
+        Board board = boardRepository.findById(id).orElseThrow(
+                () -> new RuntimeException("게시판이 없습니다.")
+        );
+
+        return BoardDtoMapper.MAPPER.toDto(board);
     }
 }
