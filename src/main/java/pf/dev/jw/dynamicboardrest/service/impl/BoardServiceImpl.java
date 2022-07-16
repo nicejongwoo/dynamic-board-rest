@@ -23,12 +23,11 @@ import pf.dev.jw.dynamicboardrest.service.BoardService;
 public class BoardServiceImpl implements BoardService {
 
     private final BoardRepository boardRepository;
+
+    @Transactional
     @Override
     public Long register(BoardRequest request) {
-        if (boardRepository.existsByCode(request.getCode())) {
-            throw new CustomApiException("게시판 코드가 중복입니다.", HttpStatus.BAD_REQUEST);
-        }
-
+        if (boardRepository.existsByCode(request.getCode())) throw new CustomApiException("게시판 코드가 중복입니다.", HttpStatus.BAD_REQUEST);
         //boardRequest -> Board
         Board board = BoardDtoMapper.MAPPER.toEntity(request);
         boardRepository.save(board);
@@ -43,14 +42,19 @@ public class BoardServiceImpl implements BoardService {
 
     @Override
     public BoardResponse getOne(Long id) {
-        Board board = boardRepository.findById(id).orElseThrow(() -> new CustomApiException("게시판이 없습니다.", HttpStatus.NOT_FOUND));
+        Board board = checkBoard(id);
         return BoardDtoMapper.MAPPER.toDto(board);
     }
 
     @Transactional
     @Override
     public void edit(Long id, BoardRequest request) {
-        Board board = boardRepository.findById(id).orElseThrow(() -> new CustomApiException("게시판이 없습니다.", HttpStatus.NOT_FOUND));
+        Board board = checkBoard(id);
         board.edit(request);
+    }
+
+    private Board checkBoard(Long id) {
+        Board board = boardRepository.findById(id).orElseThrow(() -> new CustomApiException("게시판이 없습니다.", HttpStatus.NOT_FOUND));
+        return board;
     }
 }
