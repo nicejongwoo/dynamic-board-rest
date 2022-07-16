@@ -25,7 +25,7 @@ public class BoardRestController {
     @PostMapping("")
     public ResponseEntity<?> register(@RequestBody BoardRequest request) {
         Long id = boardService.register(request);
-        return new ResponseEntity<>(id, HttpStatus.CREATED);
+        return new ResponseEntity<>(CommonResponse.success(id, "게시판을 등록하였습니다."), HttpStatus.CREATED);
     }
 
     @GetMapping("")
