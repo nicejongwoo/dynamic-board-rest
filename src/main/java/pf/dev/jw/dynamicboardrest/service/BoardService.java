@@ -13,4 +13,6 @@ public interface BoardService {
     Page<BoardListResponse> getList(BoardSearch search, Pageable pageable);
 
     BoardResponse getOne(Long id);
+
+    void edit(Long id, BoardRequest request);
 }

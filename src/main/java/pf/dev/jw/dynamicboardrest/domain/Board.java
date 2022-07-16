@@ -4,6 +4,7 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import pf.dev.jw.dynamicboardrest.controller.dto.request.BoardRequest;
 
 import javax.persistence.*;
 import java.util.List;
@@ -47,4 +48,17 @@ public class Board {
     @OneToMany(mappedBy = "board", fetch = FetchType.LAZY)
     private List<Article> articles;
 
+    public void edit(BoardRequest request) {
+        this.code = request.getCode();
+        this.name = request.getName();
+        this.skin = request.getSkin();
+        this.secretEnable = request.getSecretEnable();
+        this.attachmentEnable = request.getAttachmentEnable();
+        this.thumbnailEnable = request.getThumbnailEnable();
+        this.categoryEnable = request.getCategoryEnable();
+        this.notificationEnable = request.getNotificationEnable();
+        this.commentEnable = request.getCommentEnable();
+        this.answerEnable = request.getAnswerEnable();
+        this.available = request.getAvailable();
+    }
 }

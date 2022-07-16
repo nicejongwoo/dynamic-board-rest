@@ -40,5 +40,11 @@ public class BoardRestController {
         return ResponseEntity.ok(CommonResponse.success(response, ""));
     }
 
+    @PutMapping("/{id}")
+    public ResponseEntity<?> edit(@PathVariable Long id, @RequestBody BoardRequest request) {
+        boardService.edit(id, request);
+        return ResponseEntity.ok(CommonResponse.success(id, "게시판을 수정하였습니다."));
+    }
+
 
 }

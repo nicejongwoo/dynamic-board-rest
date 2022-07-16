@@ -6,6 +6,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import pf.dev.jw.dynamicboardrest.controller.dto.mapper.BoardDtoMapper;
 import pf.dev.jw.dynamicboardrest.controller.dto.request.BoardRequest;
 import pf.dev.jw.dynamicboardrest.controller.dto.response.BoardListResponse;
@@ -44,5 +45,12 @@ public class BoardServiceImpl implements BoardService {
     public BoardResponse getOne(Long id) {
         Board board = boardRepository.findById(id).orElseThrow(() -> new CustomApiException("게시판이 없습니다.", HttpStatus.NOT_FOUND));
         return BoardDtoMapper.MAPPER.toDto(board);
+    }
+
+    @Transactional
+    @Override
+    public void edit(Long id, BoardRequest request) {
+        Board board = boardRepository.findById(id).orElseThrow(() -> new CustomApiException("게시판이 없습니다.", HttpStatus.NOT_FOUND));
+        board.edit(request);
     }
 }
