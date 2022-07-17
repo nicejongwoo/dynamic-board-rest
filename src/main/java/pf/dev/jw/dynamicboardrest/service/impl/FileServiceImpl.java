@@ -23,7 +23,7 @@ import java.util.UUID;
 @Slf4j
 @RequiredArgsConstructor
 @Service
-public class fileServiceImpl implements FileService {
+public class FileServiceImpl implements FileService {
 
     private final FileRepository fileRepository;
 
@@ -41,7 +41,7 @@ public class fileServiceImpl implements FileService {
         String extension = FilenameUtils.getExtension(originalFilename); //txt
         //실제 저장 파일명(랜덤)
         UUID uuid = UUID.randomUUID();
-        String newName = uuid.toString() + "_" + originalName;
+        String newName = uuid.toString();
         //사이즈
         long size = file.getSize();
         //파일타입
