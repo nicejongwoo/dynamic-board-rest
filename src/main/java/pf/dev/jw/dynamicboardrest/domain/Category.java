@@ -4,6 +4,7 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import pf.dev.jw.dynamicboardrest.controller.dto.request.CategoryRequest;
 
 import javax.persistence.*;
 import java.util.List;
@@ -30,6 +31,12 @@ public class Category {
 
     @Builder
     public Category(String name, String code, Board board) {
+        this.name = name;
+        this.code = code;
+        this.board = board;
+    }
+
+    public void updateCategory(String name, String code, Board board) {
         this.name = name;
         this.code = code;
         this.board = board;
