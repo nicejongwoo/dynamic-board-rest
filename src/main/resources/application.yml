@@ -16,6 +16,12 @@ spring:
         web-allow-others: false
   jpa:
     database-platform: org.hibernate.dialect.H2Dialect
+    hibernate:
+      ddl-auto: create-drop
+    properties:
+      hibernate:
+        format_sql: true
+        use_sql_comments: true
   servlet:
     multipart:
       enabled: true
@@ -25,3 +31,10 @@ spring:
 file:
   upload:
     directory: upload
+
+logging:
+  level:
+    org:
+      hibernate:
+        SQL: debug
+        type: trace
