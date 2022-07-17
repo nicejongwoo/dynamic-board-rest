@@ -49,7 +49,12 @@ public class CategoryServiceImpl implements CategoryService {
 
     @Override
     public CategoryResponse getOne(Long id) {
-        return null;
+        //카테고리존재여부
+        Category category = categoryRepository.findById(id).orElseThrow(
+                () -> new CustomApiException("카테고리가 없습니다.", HttpStatus.NOT_FOUND)
+        );
+        CategoryResponse response = CategoryDtoMapper.MAPPER.toDto(category);
+        return response;
     }
 
     @Transactional
