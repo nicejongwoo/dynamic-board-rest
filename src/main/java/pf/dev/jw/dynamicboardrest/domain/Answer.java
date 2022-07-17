@@ -1,5 +1,6 @@
 package pf.dev.jw.dynamicboardrest.domain;
 
+import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
@@ -14,14 +15,16 @@ public class Answer {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    private String title;
-
     @Lob
     private String content;
 
-    @OneToOne
+    @ManyToOne
     @JoinColumn(name = "article_id")
     private Article article;
 
-
+    @Builder
+    public Answer(String content, Article article) {
+        this.content = content;
+        this.article = article;
+    }
 }

@@ -6,6 +6,8 @@ import lombok.NoArgsConstructor;
 import pf.dev.jw.dynamicboardrest.controller.dto.request.ArticleRequest;
 
 import javax.persistence.*;
+import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 @NoArgsConstructor
@@ -37,15 +39,15 @@ public class Article {
     @JoinColumn(name = "attachment_id")
     private Attachment attachment;
 
-    @OneToMany(mappedBy = "article", cascade = CascadeType.ALL)
-    private Set<Comment> comments;
-
     @ManyToOne
     @JoinColumn(name = "category_id")
     private Category category;
 
-    @OneToOne
-    private Answer answer;
+    @OneToMany(mappedBy = "article")
+    private Set<Answer> answers = new HashSet<>();
+
+//    @OneToMany(mappedBy = "article", cascade = CascadeType.ALL)
+//    private Set<Comment> comments;
 
     @Builder
     public Article(
