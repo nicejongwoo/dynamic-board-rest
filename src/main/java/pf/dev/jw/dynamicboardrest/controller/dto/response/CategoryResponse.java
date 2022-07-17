@@ -1,12 +1,10 @@
 package pf.dev.jw.dynamicboardrest.controller.dto.response;
 
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 @AllArgsConstructor
 @NoArgsConstructor
-@Data
+@Getter @Setter
 public class CategoryResponse {
 
     private Long id;
