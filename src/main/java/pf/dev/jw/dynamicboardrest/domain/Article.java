@@ -3,6 +3,7 @@ package pf.dev.jw.dynamicboardrest.domain;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import pf.dev.jw.dynamicboardrest.controller.dto.request.ArticleRequest;
 
 import javax.persistence.*;
 import java.util.Set;
@@ -26,7 +27,7 @@ public class Article {
 
     private boolean notification;
 
-    private Integer thumbnailId;
+    private Long thumbnailId;
 
     @ManyToOne
     @JoinColumn(name = "board_id")
@@ -52,7 +53,7 @@ public class Article {
             String content,
             boolean secret,
             boolean notification,
-            Integer thumbnailId,
+            Long thumbnailId,
             Board board,
             Category category
     ) {
@@ -67,5 +68,15 @@ public class Article {
 
     public void updateAttachment(Attachment attachment) {
         this.attachment = attachment;
+    }
+
+    public void updateArticle(ArticleRequest request, Board board, Category category) {
+        this.title = request.getTitle();
+        this.content = request.getContent();
+        this.secret = request.isSecret();
+        this.notification = request.isNotification();
+        this.thumbnailId = request.getThumbnailId();
+        this.board = board;
+        this.category = category;
     }
 }

@@ -19,6 +19,6 @@ public class Attachment {
     private Article article;
 
     @OneToMany(mappedBy = "attachment")
-    private List<File> file;
+    private List<File> files;
 
 }

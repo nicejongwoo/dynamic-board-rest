@@ -4,7 +4,6 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import pf.dev.jw.dynamicboardrest.domain.Attachment;
 
 @Builder
 @AllArgsConstructor

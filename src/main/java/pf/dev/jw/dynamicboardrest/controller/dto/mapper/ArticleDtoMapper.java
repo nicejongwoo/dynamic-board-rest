@@ -4,6 +4,7 @@ import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 import org.mapstruct.factory.Mappers;
 import pf.dev.jw.dynamicboardrest.controller.dto.request.ArticleRequest;
+import pf.dev.jw.dynamicboardrest.controller.dto.response.ArticleResponse;
 import pf.dev.jw.dynamicboardrest.domain.Article;
 import pf.dev.jw.dynamicboardrest.domain.Board;
 import pf.dev.jw.dynamicboardrest.domain.Category;
@@ -17,4 +18,6 @@ public interface ArticleDtoMapper {
     @Mapping(source = "category", target = "category")
     Article toEntity(ArticleRequest request, Board board, Category category);
 
+    @Mapping(target = "category.board", ignore = true)
+    ArticleResponse toDto(Article article);
 }
