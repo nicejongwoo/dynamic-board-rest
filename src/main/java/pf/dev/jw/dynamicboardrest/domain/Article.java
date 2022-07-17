@@ -1,5 +1,6 @@
 package pf.dev.jw.dynamicboardrest.domain;
 
+import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
@@ -25,11 +26,13 @@ public class Article {
 
     private boolean notification;
 
+    private Integer thumbnailId;
+
     @ManyToOne
     @JoinColumn(name = "board_id")
     private Board board;
 
-    @OneToOne
+    @OneToOne(cascade = CascadeType.PERSIST)
     @JoinColumn(name = "attachment_id")
     private Attachment attachment;
 
@@ -43,4 +46,26 @@ public class Article {
     @OneToOne
     private Answer answer;
 
+    @Builder
+    public Article(
+            String title,
+            String content,
+            boolean secret,
+            boolean notification,
+            Integer thumbnailId,
+            Board board,
+            Category category
+    ) {
+        this.title = title;
+        this.content = content;
+        this.secret = secret;
+        this.notification = notification;
+        this.thumbnailId = thumbnailId;
+        this.board = board;
+        this.category = category;
+    }
+
+    public void updateAttachment(Attachment attachment) {
+        this.attachment = attachment;
+    }
 }

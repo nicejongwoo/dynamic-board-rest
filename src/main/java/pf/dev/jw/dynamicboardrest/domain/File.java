@@ -28,4 +28,7 @@ public class File {
     @JoinColumn(name = "attachment_id")
     private Attachment attachment;
 
+    public void uploadAttachment(Attachment attachment) {
+        this.attachment = attachment;
+    }
 }
