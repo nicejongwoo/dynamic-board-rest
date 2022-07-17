@@ -8,6 +8,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import pf.dev.jw.dynamicboardrest.controller.dto.mapper.ArticleDtoMapper;
+import pf.dev.jw.dynamicboardrest.controller.dto.mapper.BoardDtoMapper;
 import pf.dev.jw.dynamicboardrest.controller.dto.mapper.FileDtoMapper;
 import pf.dev.jw.dynamicboardrest.controller.dto.request.ArticleRequest;
 import pf.dev.jw.dynamicboardrest.controller.dto.response.ArticleListResponse;
@@ -60,7 +61,14 @@ public class ArticleServiceImpl implements ArticleService {
 
     @Override
     public Page<ArticleListResponse> getList(ArticleSearch search, Pageable pageable) {
-        return null;
+        Page<ArticleListResponse> page = articleRepository.search(search, pageable);
+
+        for (ArticleListResponse response : page) {
+            Board board = checkBoard(response.getBoardId());
+            response.setBoard(BoardDtoMapper.MAPPER.toDto(board));
+        }
+
+        return page;
     }
 
     @Override
