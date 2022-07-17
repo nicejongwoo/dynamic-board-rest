@@ -20,4 +20,5 @@ public interface CategoryDtoMapper {
 
     @Mapping(source = "board", target = "board")
     CategoryResponse toDto(Category category);
+
 }

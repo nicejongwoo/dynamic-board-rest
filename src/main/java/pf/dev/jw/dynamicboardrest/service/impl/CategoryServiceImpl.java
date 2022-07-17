@@ -7,6 +7,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import pf.dev.jw.dynamicboardrest.controller.dto.mapper.BoardDtoMapper;
 import pf.dev.jw.dynamicboardrest.controller.dto.mapper.CategoryDtoMapper;
 import pf.dev.jw.dynamicboardrest.controller.dto.request.CategoryRequest;
 import pf.dev.jw.dynamicboardrest.controller.dto.response.CategoryListResponse;
@@ -42,7 +43,16 @@ public class CategoryServiceImpl implements CategoryService {
 
     @Override
     public Page<CategoryListResponse> getList(CategorySearch search, Pageable pageable) {
-        return null;
+        Page<CategoryListResponse> categories = categoryRepository.search(search, pageable);
+
+        categories.stream().forEach((response) -> {
+            Board board = boardRepository.findById(response.getBoardId()).orElseThrow(
+                    () -> new CustomApiException("게시판이 없습니다.", HttpStatus.NOT_FOUND)
+            );
+            response.setBoard(BoardDtoMapper.MAPPER.toDto(board));
+        });
+
+        return categories;
     }
 
     @Override
