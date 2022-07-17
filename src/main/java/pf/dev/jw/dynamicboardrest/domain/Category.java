@@ -1,5 +1,7 @@
 package pf.dev.jw.dynamicboardrest.domain;
 
+import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
@@ -26,8 +28,10 @@ public class Category {
     @OneToMany(mappedBy = "category")
     private List<Article> articles;
 
-    public Category(String name, String code) {
+    @Builder
+    public Category(String name, String code, Board board) {
         this.name = name;
         this.code = code;
+        this.board = board;
     }
 }
