@@ -20,5 +20,6 @@ public class ArticleResponse {
     private BoardResponse board;
     private CategoryResponse category;
     private List<FileResponse> files;
+    private List<AnswerResponse> answers;
 
 }

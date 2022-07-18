@@ -6,9 +6,8 @@ import lombok.NoArgsConstructor;
 import pf.dev.jw.dynamicboardrest.controller.dto.request.ArticleRequest;
 
 import javax.persistence.*;
-import java.util.HashSet;
+import java.util.ArrayList;
 import java.util.List;
-import java.util.Set;
 
 @NoArgsConstructor
 @Getter
@@ -44,7 +43,7 @@ public class Article {
     private Category category;
 
     @OneToMany(mappedBy = "article")
-    private Set<Answer> answers = new HashSet<>();
+    private List<Answer> answers = new ArrayList<>();
 
 //    @OneToMany(mappedBy = "article", cascade = CascadeType.ALL)
 //    private Set<Comment> comments;

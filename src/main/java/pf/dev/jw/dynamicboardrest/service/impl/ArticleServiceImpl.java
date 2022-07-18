@@ -7,10 +7,12 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import pf.dev.jw.dynamicboardrest.controller.dto.mapper.AnswerDtoMapper;
 import pf.dev.jw.dynamicboardrest.controller.dto.mapper.ArticleDtoMapper;
 import pf.dev.jw.dynamicboardrest.controller.dto.mapper.BoardDtoMapper;
 import pf.dev.jw.dynamicboardrest.controller.dto.mapper.FileDtoMapper;
 import pf.dev.jw.dynamicboardrest.controller.dto.request.ArticleRequest;
+import pf.dev.jw.dynamicboardrest.controller.dto.response.AnswerResponse;
 import pf.dev.jw.dynamicboardrest.controller.dto.response.ArticleListResponse;
 import pf.dev.jw.dynamicboardrest.controller.dto.response.ArticleResponse;
 import pf.dev.jw.dynamicboardrest.controller.dto.response.FileResponse;
@@ -80,6 +82,11 @@ public class ArticleServiceImpl implements ArticleService {
         if (board.isAttachmentEnable() && article.getAttachment() != null) {
             List<FileResponse> fileResponses = FileDtoMapper.MAPPER.toDtoList(article.getAttachment().getFiles());
             response.setFiles(fileResponses);
+        }
+
+        if (board.isAnswerEnable() && article.getAnswers().size() > 0) {
+            List<AnswerResponse> answerResponses = AnswerDtoMapper.MAPPER.toDtoList(article.getAnswers());
+            response.setAnswers(answerResponses);
         }
 
         return response;
