@@ -24,10 +24,7 @@ public class AnswerServiceImpl implements AnswerService {
 
     @Override
     public Long register(AnswerRequest request) {
-        //게시글 확인
-        Article article = articleRepository.findById(request.getArticleId()).orElseThrow(
-                () -> new CustomApiException("게시글이 없습니다.", HttpStatus.NOT_FOUND)
-        );
+        Article article = checkArticle(request);
         Answer answer = AnswerDtoMapper.MAPPER.toEntity(request, article);
         answerRepository.save(answer);
         return answer.getId();
@@ -36,19 +33,22 @@ public class AnswerServiceImpl implements AnswerService {
     @Transactional
     @Override
     public void edit(Long id, AnswerRequest request) {
-        Answer answer = answerRepository.findById(id).orElseThrow(
-                () -> new CustomApiException("답변이 없습니다.", HttpStatus.NOT_FOUND)
-        );
-
+        Answer answer = checkAnswer(id);
         answer.editAnswerContent(request.getContent());
     }
 
     @Transactional
     @Override
     public void delete(Long id) {
-        Answer answer = answerRepository.findById(id).orElseThrow(
-                () -> new CustomApiException("답변이 없습니다.", HttpStatus.NOT_FOUND)
-        );
+        Answer answer = checkAnswer(id);
         answerRepository.delete(answer);
+    }
+
+    private Article checkArticle(AnswerRequest request) {
+        return articleRepository.findById(request.getArticleId()).orElseThrow(() -> new CustomApiException("게시글이 없습니다.", HttpStatus.NOT_FOUND));
+    }
+
+    private Answer checkAnswer(Long id) {
+        return answerRepository.findById(id).orElseThrow(() -> new CustomApiException("답변이 없습니다.", HttpStatus.NOT_FOUND));
     }
 }
