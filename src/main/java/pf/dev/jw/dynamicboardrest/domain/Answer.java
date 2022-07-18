@@ -5,6 +5,8 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
+import java.util.ArrayList;
+import java.util.List;
 
 @NoArgsConstructor
 @Getter
@@ -21,6 +23,9 @@ public class Answer {
     @ManyToOne
     @JoinColumn(name = "article_id")
     private Article article;
+
+    @OneToMany(mappedBy = "answer")
+    private List<Comment> comments = new ArrayList<>();
 
     @Builder
     public Answer(String content, Article article) {

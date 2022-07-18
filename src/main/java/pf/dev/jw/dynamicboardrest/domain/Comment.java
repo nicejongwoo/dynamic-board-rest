@@ -1,6 +1,7 @@
 package pf.dev.jw.dynamicboardrest.domain;
 
 
+import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
@@ -18,7 +19,16 @@ public class Comment {
     private String content;
 
     @ManyToOne
-    @JoinColumn(name = "article_id")
-    private Article article;
+    @JoinColumn(name = "answer_id")
+    private Answer answer;
 
+    @Builder
+    public Comment(String content, Answer answer) {
+        this.content = content;
+        this.answer = answer;
+    }
+
+    public void editContent(String content) {
+        this.content = content;
+    }
 }

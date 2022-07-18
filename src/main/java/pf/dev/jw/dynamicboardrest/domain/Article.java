@@ -45,9 +45,6 @@ public class Article {
     @OneToMany(mappedBy = "article")
     private List<Answer> answers = new ArrayList<>();
 
-//    @OneToMany(mappedBy = "article", cascade = CascadeType.ALL)
-//    private Set<Comment> comments;
-
     @Builder
     public Article(
             String title,
