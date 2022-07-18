@@ -7,4 +7,5 @@ public interface AnswerService {
 
     void edit(Long id, AnswerRequest request);
 
+    void delete(Long id);
 }

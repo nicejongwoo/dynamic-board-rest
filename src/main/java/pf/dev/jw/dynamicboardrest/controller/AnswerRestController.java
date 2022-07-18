@@ -31,4 +31,10 @@ public class AnswerRestController {
         return ResponseEntity.ok(CommonResponse.success(id, "답변을 수정하였습니다."));
     }
 
+    @DeleteMapping("/{id}")
+    public ResponseEntity<?> delete(@PathVariable Long id) {
+        answerService.delete(id);
+        return ResponseEntity.ok(CommonResponse.success(id, "답변을 삭제하였습니다."));
+    }
+
 }

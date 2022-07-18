@@ -42,4 +42,13 @@ public class AnswerServiceImpl implements AnswerService {
 
         answer.editAnswerContent(request.getContent());
     }
+
+    @Transactional
+    @Override
+    public void delete(Long id) {
+        Answer answer = answerRepository.findById(id).orElseThrow(
+                () -> new CustomApiException("답변이 없습니다.", HttpStatus.NOT_FOUND)
+        );
+        answerRepository.delete(answer);
+    }
 }
