@@ -27,4 +27,8 @@ public class Answer {
         this.content = content;
         this.article = article;
     }
+
+    public void editAnswerContent(String content) {
+        this.content = content;
+    }
 }
