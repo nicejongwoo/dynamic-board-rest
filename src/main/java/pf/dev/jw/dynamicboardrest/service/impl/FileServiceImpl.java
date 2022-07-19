@@ -4,12 +4,15 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.io.FilenameUtils;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 import pf.dev.jw.dynamicboardrest.controller.dto.mapper.FileDtoMapper;
 import pf.dev.jw.dynamicboardrest.controller.dto.request.FileRequest;
+import pf.dev.jw.dynamicboardrest.controller.dto.response.FileResponse;
 import pf.dev.jw.dynamicboardrest.domain.File;
+import pf.dev.jw.dynamicboardrest.exception.CustomApiException;
 import pf.dev.jw.dynamicboardrest.repository.FileRepository;
 import pf.dev.jw.dynamicboardrest.service.FileService;
 
@@ -18,6 +21,7 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.time.LocalDate;
+import java.util.List;
 import java.util.UUID;
 
 @Slf4j
@@ -69,6 +73,12 @@ public class FileServiceImpl implements FileService {
         File file = FileDtoMapper.MAPPER.toEntity(request);
         fileRepository.save(file);
         return file.getId();
+    }
+
+    @Override
+    public List<FileResponse> getFilesByAttachment(Long id) {
+        List<File> files = fileRepository.findByAttachmentId(id);
+        return FileDtoMapper.MAPPER.toDtoList(files);
     }
 
 
